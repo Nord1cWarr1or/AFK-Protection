@@ -1,0 +1,22 @@
+[en]
+AFKPROTECTION_CVAR_EFFECTS                  = Effects for afk player^na - transparency^nb - screenfade^nc - icon on a top
+AFKPROTECTION_CVAR_TIME                     = Time (in seconds) before a player turns on his defense
+AFKPROTECTION_CVAR_SCREENFADE_AMOUNT        = Screenfade amount
+AFKPROTECTION_CVAR_RANDOM_SCREENFADE_COLOR  = Random screenfade color^n0 - off^n1 - on
+AFKPROTECTION_CVAR_MESSAGE                  = Messages about enter/exit afk mode^n0 - off^n1 - chat^n2 - hud^n3 - DHUD^n4 - center
+AFKPROTECTION_CHAT_AFK_ON                   = You went into AFK mode
+AFKPROTECTION_CHAT_AFK_OFF                  = You're out of AFK mode
+AFKPROTECTION_CHAT_COLOR_AFK_ON             = ^4* ^1You ^3went ^1into AFK mode.
+AFKPROTECTION_CHAT_COLOR_AFK_OFF            = ^4* ^1You ^3are out ^1of AFK mode.
+
+
+[ru]
+AFKPROTECTION_CVAR_EFFECTS                  = Эффекты игрока в афк^na - прозрачность^nb - затемнение экрана^nc - иконка над головой
+AFKPROTECTION_CVAR_TIME                     = Время (в секундах) до того, как игроку будет включена защита
+AFKPROTECTION_CVAR_SCREENFADE_AMOUNT        = Глубина затемнения экрана
+AFKPROTECTION_CVAR_RANDOM_SCREENFADE_COLOR  = Случайный цвет затемнения экрана^n0 - выключено^n1 - включено
+AFKPROTECTION_CVAR_MESSAGE                  = Сообщения о входе/выходе в режим афк^n0 - выключено^n1 - чат^n2 - hud^n3 - DHUD^n4 - центр
+AFKPROTECTION_CHAT_AFK_ON                   = Вы перешли в режим AFK
+AFKPROTECTION_CHAT_AFK_OFF                  = Вы вышли из режима AFK
+AFKPROTECTION_CHAT_COLOR_AFK_ON             = ^4* ^1Вы ^3перешли ^1в режим афк.
+AFKPROTECTION_CHAT_COLOR_AFK_OFF            = ^4* ^1Вы ^3вышли ^1из режима афк.
