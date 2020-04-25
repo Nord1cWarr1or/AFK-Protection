@@ -314,6 +314,7 @@ ResetCounters(const id, bool:bDisconnected = false, bStopTask = false)
     new bool:bOldState = g_bIsPlayerAFK[id];
 
     g_bIsPlayerAFK[id] = false;
+    g_bIsPlayerOffProtect[id] = false;
     
     g_iPlayerTime[id] = 0;
 
