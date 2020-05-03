@@ -9,7 +9,6 @@ AFKPROTECTION_CHAT_AFK_OFF                  = You're out of AFK mode
 AFKPROTECTION_CHAT_COLOR_AFK_ON             = ^4* ^1You ^3went ^1into AFK mode.
 AFKPROTECTION_CHAT_COLOR_AFK_OFF            = ^4* ^1You ^3are out ^1of AFK mode.
 
-
 [ru]
 AFKPROTECTION_CVAR_EFFECTS                  = Эффекты игрока в афк^na - прозрачность^nb - затемнение экрана^nc - иконка над головой
 AFKPROTECTION_CVAR_TIME                     = Время (в секундах) до того, как игроку будет включена защита
