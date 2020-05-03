@@ -11,7 +11,7 @@
  *
  * @return      True, if player is AFK, false otherwise
  */
-native booL:apr_get_player_afk(id);
+native bool:apr_get_player_afk(id);
 
 /**
  * Activate or deactivate player's AFK protection.
@@ -31,7 +31,7 @@ native apr_set_player_afk(id, bool:bSet);
  *
  * @return      True, if player is OFF AFK protection, false otherwise
  */
-native booL:apr_get_player_status(id);
+native bool:apr_get_player_status(id);
 
 /**
  * Turn ON or OFF checks for afk for player.
