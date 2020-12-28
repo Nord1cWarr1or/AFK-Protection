@@ -1,3 +1,21 @@
+/*  *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+*                                                                               *
+*   Plugin: AFK Protection                                                      *
+*                                                                               *
+*   Official plugin support: https://dev-cs.ru/threads/4409/                    *
+*   Official repository: https://github.com/Nord1cWarr1or/AFK-Protection        *
+*   Contacts of the author: Telegram: @NordicWarrior                            *
+*                                                                               *
+*   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *       *
+*                                                                               *
+*   Плагин: Защита АФК-игроков                                                  *
+*                                                                               *
+*   Официальная поддержка плагина: https://dev-cs.ru/threads/4409/              *
+*   Официальный репозиторий: https://github.com/Nord1cWarr1or/AFK-Protection    *
+*   Связь с автором: Telegram: @NordicWarrior                                   *
+*                                                                               *
+*   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   */
+
 #include <amxmodx>
 #include <amxmisc>
 #include <reapi>
