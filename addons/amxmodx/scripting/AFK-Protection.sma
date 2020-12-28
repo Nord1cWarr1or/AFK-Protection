@@ -5,7 +5,7 @@
 #include <msgstocks>
 #include <xs>
 
-new const PLUGIN_VERSION[] = "3.0.1";
+new const PLUGIN_VERSION[] = "3.1.0";
 
 #define GetCvarDesc(%0) fmt("%L", LANG_SERVER, %0)
 
@@ -20,7 +20,7 @@ enum _:AFKEffectsFlags (<<=1)
 
 enum _:Cvars
 {
-    EFFECTS[3],
+    EFFECTS[4],
     AFK_TIME,
     SCREENFADE_AMOUNT,
     RANDOM_SCREENFADE_COLOR,
@@ -45,6 +45,9 @@ new g_pCvarValue[Cvars];
 new g_pCvarEffects;
 new g_iSycnHudObj;
 
+new g_iFwd_PlayerBecameAFK_pre, g_iFwd_PlayerBecameAFK_post;
+new g_iFwd_PlayerBack_pre, g_iFwd_PlayerBack_post;
+
 new const g_szAFKIconPath[] = "sprites/afk/afk.spr";    // Path to sprite or model of AFK icon
 
 #define AUTO_CONFIG		// Comment out if you don't want the plugin config to be created automatically in "configs/plugins"
@@ -67,6 +70,8 @@ public plugin_init()
     g_iSycnHudObj = CreateHudSyncObj();
 
     hook_cvar_change(g_pCvarEffects, "OnChangeCvarEffects");
+
+    CreateForwards();
 }
 
 public plugin_precache()
@@ -174,6 +179,8 @@ public AFKCheck(id)
 
     static Float:flPlayerOrigin[XYZ], Float:flPlayerViewAngle[XYZ];
 
+    static iReturn;
+
     get_entvar(id, var_origin, flPlayerOrigin);
     get_entvar(id, var_angles, flPlayerViewAngle);
 
@@ -187,22 +194,37 @@ public AFKCheck(id)
 
         if(g_iPlayerTime[id] >= g_pCvarValue[AFK_TIME] / CHECK_FREQUENCY)
         {
+            ExecuteForward(g_iFwd_PlayerBecameAFK_pre, iReturn, id);
+
+            if(iReturn == PLUGIN_HANDLED)
+                return;
+
             g_bIsPlayerAFK[id] = true;
             g_iPlayerTime[id] = 0;
 
             ToggleAFKProtection(id);
             SendMessage(id);
+
+            ExecuteForward(g_iFwd_PlayerBecameAFK_post, iReturn, id);
         }
     }
     else
     {
         if(g_bIsPlayerAFK[id])
         {
+            ExecuteForward(g_iFwd_PlayerBack_pre, iReturn, id);
+
+            if(iReturn == PLUGIN_HANDLED)
+                return;
+
             g_bIsPlayerAFK[id] = false;
 
             ToggleAFKProtection(id);
             SendMessage(id);
+
+            ExecuteForward(g_iFwd_PlayerBack_post, iReturn, id);
         }
+
         g_iPlayerTime[id] = 0;
     }
 
@@ -314,7 +336,6 @@ ResetCounters(const id, bool:bDisconnected = false, bStopTask = false)
     new bool:bOldState = g_bIsPlayerAFK[id];
 
     g_bIsPlayerAFK[id] = false;
-    g_bIsPlayerOffProtect[id] = false;
     
     g_iPlayerTime[id] = 0;
 
@@ -339,6 +360,7 @@ ResetCounters(const id, bool:bDisconnected = false, bStopTask = false)
     else
     {
         g_bIsPlayerBot[id] = false;
+        g_bIsPlayerOffProtect[id] = false;
 
         if(g_iPlayerIcon[id] != NULLENT)
         {
@@ -497,7 +519,7 @@ public native_apr_set_player_status(iPluginID, iParams)
     return bSet;
 }
 
-public CreateCvars()
+CreateCvars()
 {
     bind_pcvar_string(g_pCvarEffects = create_cvar("afk_effects",
         .string = "abc",
@@ -519,6 +541,14 @@ public CreateCvars()
     bind_pcvar_num(create_cvar("afk_message", "0",
         .description = GetCvarDesc("AFKPROTECTION_CVAR_MESSAGE")),
         g_pCvarValue[MESSAGE]);
+}
+
+CreateForwards()
+{
+    g_iFwd_PlayerBecameAFK_pre  = CreateMultiForward("OnPlayerBecameAFK_pre", ET_STOP, FP_CELL);
+    g_iFwd_PlayerBecameAFK_post = CreateMultiForward("OnPlayerBecameAFK_post", ET_IGNORE, FP_CELL);
+    g_iFwd_PlayerBack_pre       = CreateMultiForward("OnPlayerBack_pre", ET_STOP, FP_CELL);
+    g_iFwd_PlayerBack_post      = CreateMultiForward("OnPlayerBack_post", ET_IGNORE, FP_CELL);
 }
 
 public OnConfigsExecuted()
