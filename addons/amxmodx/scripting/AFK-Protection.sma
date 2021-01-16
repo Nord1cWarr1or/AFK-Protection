@@ -252,9 +252,18 @@ public AFKCheck(id)
 
 ToggleAFKProtection(const id)
 {
-    set_entvar(id, var_takedamage, g_bIsPlayerAFK[id] ? DAMAGE_NO : DAMAGE_AIM);
-    set_entvar(id, var_solid, g_bIsPlayerAFK[id] ? SOLID_NOT : SOLID_SLIDEBOX);
-    set_member(id, m_bIsDefusing, g_bIsPlayerAFK[id] ? true : false);
+    if(g_bIsPlayerAFK[id])
+    {
+        set_entvar(id, var_takedamage, DAMAGE_NO);
+        set_entvar(id, var_solid, SOLID_NOT);
+        set_member(id, m_bIsDefusing, true);
+    }
+    else
+    {
+        set_entvar(id, var_takedamage, DAMAGE_AIM);
+        set_entvar(id, var_solid, SOLID_SLIDEBOX);
+        set_member(id, m_bIsDefusing, false);
+    }
 
     ToggleEffects(id);
 }
