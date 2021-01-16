@@ -23,7 +23,7 @@
 #include <msgstocks>
 #include <xs>
 
-new const PLUGIN_VERSION[] = "3.1.0";
+new const PLUGIN_VERSION[] = "3.1.1";
 
 #define GetCvarDesc(%0) fmt("%L", LANG_SERVER, %0)
 
@@ -389,6 +389,9 @@ ResetCounters(const id, bool:bDisconnected = false, bStopTask = false)
 
 SetScreenFade(const id)
 {
+    if(get_viewent(id) != id)
+        return;
+
     fade_user_screen(id, 
         .duration = 0.0,
         .fadetime = 0.0,
@@ -401,6 +404,9 @@ SetScreenFade(const id)
 
 UnsetScreenFade(const id)
 {
+    if(get_viewent(id) != id)
+        return;
+
     fade_user_screen(id, 
         .duration = 0.0,
         .fadetime = g_pCvarValue[RANDOM_SCREENFADE_COLOR] ? 0.0 : 1.0,
