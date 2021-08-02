@@ -74,8 +74,8 @@ public plugin_init()
 {
     register_plugin("AFK Protection", PLUGIN_VERSION, "Nordic Warrior");
 
-    RegisterHookChain(RG_CBasePlayer_Spawn, "RG_OnPlayerSpawn_Post", true);
-    RegisterHookChain(RG_CBasePlayer_Killed, "RG_OnPlayerKilled_Post", true);
+    RegisterHookChain(RG_CBasePlayer_Spawn,     "RG_OnPlayerSpawn_Post",    .post = true);
+    RegisterHookChain(RG_CBasePlayer_Killed,    "RG_OnPlayerKilled_Post",   .post = true);
 
     register_dictionary("afk_protection.txt");
 
@@ -355,6 +355,7 @@ CreateIcon(const id)
 RemoveIcon(const id)
 {
     set_entvar(g_iPlayerIcon[id], var_flags, FL_KILLME);
+
     g_iPlayerIcon[id] = NULLENT;
 }
 
@@ -408,7 +409,8 @@ SetScreenFade(const id)
         .r = g_pCvarValue[RANDOM_SCREENFADE_COLOR] ? random(255) : 0,
         .g = g_pCvarValue[RANDOM_SCREENFADE_COLOR] ? random(255) : 0,
         .b = g_pCvarValue[RANDOM_SCREENFADE_COLOR] ? random(255) : 0,
-        .a = g_pCvarValue[SCREENFADE_AMOUNT]);
+        .a = g_pCvarValue[SCREENFADE_AMOUNT]
+    );
 }
 
 UnsetScreenFade(const id)
@@ -423,7 +425,8 @@ UnsetScreenFade(const id)
         .r = 0,
         .g = 0,
         .b = 0,
-        .a = g_pCvarValue[SCREENFADE_AMOUNT]);
+        .a = g_pCvarValue[SCREENFADE_AMOUNT]
+    );
 }
 
 public OnChangeCvarEffects(pCvar, const szOldValue[], const szNewValue[])
