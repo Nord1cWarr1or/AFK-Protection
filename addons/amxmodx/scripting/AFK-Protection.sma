@@ -62,6 +62,7 @@ new g_iPlayerIcon[MAX_PLAYERS + 1] = { NULLENT, ... };
 new g_pCvarValue[Cvars];
 new g_pCvarEffects;
 new g_iSycnHudObj;
+new g_iIconModelIndex;
 
 new g_iFwd_PlayerBecameAFK_pre, g_iFwd_PlayerBecameAFK_post;
 new g_iFwd_PlayerBack_pre, g_iFwd_PlayerBack_post;
@@ -96,7 +97,7 @@ public plugin_precache()
 {
     if(file_exists(g_szAFKIconPath))
     {
-        precache_model(g_szAFKIconPath);
+        g_iIconModelIndex = precache_model(g_szAFKIconPath);
     }
     else
     {
@@ -339,7 +340,8 @@ CreateIcon(const id)
     flPlayerOrigin[2] += ICON_HIGHER;
 
     set_entvar(iEnt, var_classname, g_szIconClassname);
-    engfunc(EngFunc_SetModel, iEnt, g_szAFKIconPath);
+    set_entvar(iEnt, var_model, g_szAFKIconPath);
+    set_entvar(iEnt, var_modelindex, g_iIconModelIndex);
     set_entvar(iEnt, var_scale, 0.5);
     set_entvar(iEnt, var_rendermode, kRenderTransAdd);
     set_entvar(iEnt, var_renderamt, 100.0);
