@@ -501,17 +501,33 @@ public native_apr_set_player_afk(iPluginID, iParams)
     new id = get_param(iPlayer);
     new bool:bSet = bool:get_param(_bSet);
 
+    new iReturn;
+
     if(bSet && !g_bIsPlayerAFK[id] && !g_bIsPlayerOffProtect[id])
     {
+        ExecuteForward(g_iFwd_PlayerBecameAFK_pre, iReturn, id);
+
+        if(iReturn == PLUGIN_HANDLED)
+            return false;
+
         g_bIsPlayerAFK[id] = true;
         ToggleAFKProtection(id);
+
+        ExecuteForward(g_iFwd_PlayerBecameAFK_post, iReturn, id);
 
         return true;
     }
     else if(!bSet && g_bIsPlayerAFK[id])
     {
+        ExecuteForward(g_iFwd_PlayerBack_pre, iReturn, id);
+
+        if(iReturn == PLUGIN_HANDLED)
+            return false;
+
         ResetCounters(id);
         ToggleAFKProtection(id);
+
+        ExecuteForward(g_iFwd_PlayerBack_post, iReturn, id);
 
         return true;
     }
@@ -537,12 +553,14 @@ public native_apr_set_player_status(iPluginID, iParams)
     {
         g_bIsPlayerOffProtect[id] = true;
 
-        ResetCounters(id, false, true);
-
         if(g_bIsPlayerAFK[id])
         {
-            g_bIsPlayerAFK[id] = false;
+            ResetCounters(id, false, true);
+
             ToggleAFKProtection(id);
+
+            new iReturn;
+            ExecuteForward(g_iFwd_PlayerBack_post, iReturn, id);
         }
     }
     else
