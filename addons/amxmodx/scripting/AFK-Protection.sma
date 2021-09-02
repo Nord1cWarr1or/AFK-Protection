@@ -193,7 +193,7 @@ public AFKCheck(id)
 {
     id -= TASKID__AFK_CHECK;
 
-    if(!is_user_alive(id))
+    if(!is_user_alive(id) || g_bIsPlayerOffProtect[id])
         return;
 
     static Float:flPlayerOrigin[XYZ], Float:flPlayerViewAngle[XYZ];
