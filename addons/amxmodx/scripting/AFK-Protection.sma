@@ -445,8 +445,6 @@ SetRendering(const id, const iRenderingMode)
     {
         rg_set_rendering(id, kRenderFxNone, 0, 0, 0, kRenderTransAlpha, 120);
 
-        log_amx("ENT %i, %i", rg_find_ent_by_owner(iEnt, "*", id), iEnt)
-
         iEnt = MaxClients;
 
         while((rg_find_ent_by_owner(iEnt, "*", id)))
