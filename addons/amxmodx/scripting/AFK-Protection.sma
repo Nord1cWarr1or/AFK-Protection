@@ -36,6 +36,12 @@ enum _:AFKEffectsFlags (<<=1)
     Effects_Icon
 };
 
+enum _:RenderingMode
+{
+    TRANSPARENCY_OFF,
+    TRANSPARENCY_ON
+};
+
 enum _:Cvars
 {
     EFFECTS[4],
@@ -136,7 +142,7 @@ public RG_OnPlayerSpawn_Post(const id)
     if(g_bIsPlayerAFK[id])
     {
         SetScreenFade(id);
-        rg_set_rendering(id, kRenderFxNone, 0, 0, 0, kRenderTransAlpha, 120);
+        SetRendering(id, TRANSPARENCY_ON);
 
         if(g_iPlayerIcon[id] != NULLENT)
         {
@@ -277,11 +283,11 @@ ToggleEffects(const id)
     {
         if(g_bIsPlayerAFK[id])
         {
-            rg_set_rendering(id, kRenderFxNone, 0, 0, 0, kRenderTransAlpha, 120);
+            SetRendering(id, TRANSPARENCY_ON);
         }
         else
         {
-            rg_set_rendering(id, kRenderFxNone, 0, 0, 0, kRenderNormal, 0);
+            SetRendering(id, TRANSPARENCY_OFF);
         }
     }
     if(iFlagsEffects & Effects_ScreenFade)
@@ -431,6 +437,34 @@ UnsetScreenFade(const id)
     );
 }
 
+SetRendering(const id, const iRenderingMode)
+{
+    new iEnt = MaxClients;
+
+    if(iRenderingMode)
+    {
+        rg_set_rendering(id, kRenderFxNone, 0, 0, 0, kRenderTransAlpha, 120);
+
+        log_amx("ENT %i, %i", rg_find_ent_by_owner(iEnt, "*", id), iEnt)
+
+        iEnt = MaxClients;
+
+        while((rg_find_ent_by_owner(iEnt, "*", id)))
+        {
+            rg_set_rendering(iEnt, kRenderFxNone, 0, 0, 0, kRenderTransAlpha, 120);
+        }
+    }
+    else
+    {
+        rg_set_rendering(id, kRenderFxNone, 0, 0, 0, kRenderNormal, 0);
+
+        while((rg_find_ent_by_owner(iEnt, "*", id)))
+        {
+            rg_set_rendering(iEnt, kRenderFxNone, 0, 0, 0, kRenderNormal, 0);
+        }
+    }
+}
+
 public OnChangeCvarEffects(pCvar, const szOldValue[], const szNewValue[])
 {
     new iOldFlagsEffects = read_flags(szOldValue);
@@ -473,9 +507,9 @@ public OnChangeCvarEffects(pCvar, const szOldValue[], const szNewValue[])
             continue;
 
         if(bDelTransparency)
-            rg_set_rendering(id, kRenderFxNone, 0, 0, 0, kRenderNormal, 0);
+            SetRendering(id, TRANSPARENCY_OFF);
         else if(bAddTransparency)
-            rg_set_rendering(id, kRenderFxNone, 0, 0, 0, kRenderTransAlpha, 120);
+            SetRendering(id, TRANSPARENCY_ON);
 
         if(bDelScreenFade)
             UnsetScreenFade(id);
