@@ -23,7 +23,7 @@
 #include <msgstocks>
 #include <xs>
 
-new const PLUGIN_VERSION[] = "3.2.0";
+new const PLUGIN_VERSION[] = "3.2.1";
 
 #define GetCvarDesc(%0) fmt("%L", LANG_SERVER, %0)
 
