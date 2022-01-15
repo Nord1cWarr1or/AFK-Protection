@@ -439,27 +439,13 @@ UnsetScreenFade(const id)
 
 SetRendering(const id, const iRenderingMode)
 {
-    new iEnt = MaxClients;
-
     if(iRenderingMode)
     {
         rg_set_rendering(id, kRenderFxNone, 0, 0, 0, kRenderTransAlpha, 120);
-
-        iEnt = MaxClients;
-
-        while((rg_find_ent_by_owner(iEnt, "*", id)))
-        {
-            rg_set_rendering(iEnt, kRenderFxNone, 0, 0, 0, kRenderTransAlpha, 120);
-        }
     }
     else
     {
         rg_set_rendering(id, kRenderFxNone, 0, 0, 0, kRenderNormal, 0);
-
-        while((rg_find_ent_by_owner(iEnt, "*", id)))
-        {
-            rg_set_rendering(iEnt, kRenderFxNone, 0, 0, 0, kRenderNormal, 0);
-        }
     }
 }
 
