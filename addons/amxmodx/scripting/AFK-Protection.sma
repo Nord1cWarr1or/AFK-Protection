@@ -439,7 +439,7 @@ UnsetScreenFade(const id)
 
 SetRendering(const id, const iRenderingMode)
 {
-    if(iRenderingMode)
+    if(iRenderingMode == TRANSPARENCY_ON)
     {
         rg_set_rendering(id, kRenderFxNone, 0, 0, 0, kRenderTransAlpha, 120);
     }
