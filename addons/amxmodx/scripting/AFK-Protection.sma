@@ -141,8 +141,17 @@ public RG_OnPlayerSpawn_Post(const id)
 
     if(g_bIsPlayerAFK[id])
     {
-        SetScreenFade(id);
-        SetRendering(id, TRANSPARENCY_ON);
+        new iFlagsEffects = read_flags(g_pCvarValue[EFFECTS]);
+
+        if(iFlagsEffects & Effects_ScreenFade)
+        {
+            SetScreenFade(id);
+        }
+
+        if(iFlagsEffects & Effects_Transparency)
+        {
+            SetRendering(id, TRANSPARENCY_ON);
+        }
 
         if(g_iPlayerIcon[id] != NULLENT)
         {
@@ -184,7 +193,10 @@ public StartCheck(const id)
         set_entvar(id, var_solid, SOLID_NOT);
         set_member(id, m_bIsDefusing, true);
 
-        CreateIcon(id);
+        if(read_flags(g_pCvarValue[EFFECTS]) & Effects_Icon)
+        {
+            CreateIcon(id);
+        }
     }
 
     get_entvar(id, var_origin, g_flPlayerOrigin[id]);
